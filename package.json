@@ -1,0 +1,17 @@
+{
+  "name": "bamazon-cli",
+  "version": "1.0.0",
+  "description": "Inventory Database - Command Line",
+  "main": "bamazon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "bamazon"
+  ],
+  "author": "Lucy Mashas",
+  "license": "ISC",
+  "dependencies": {
+    "mysql": "^2.15.0"
+  }
+}
