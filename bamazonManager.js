@@ -23,8 +23,9 @@ connection.connect(function(err) {
 });
 
 function display(result){
+  console.log( "Stock Quantity " + "ID " + '\t' + "Product Description\n");
   for (var i = 0; i < result.length; i++) {
-    console.log("   " + result[i].stock_quantity + "   " + result[i].item_id + "   " + result[i].product_name + "   " + "Price:  " + result[i].price);
+    console.log('\t' + result[i].stock_quantity + '\t' + result[i].item_id + '\t' + result[i].product_name + '\t' + '\t' + "Price:  " + result[i].price);
   }
   console.log("\n")
   start();
@@ -55,11 +56,18 @@ function addNewProduct(){
         },
       ])
       .then(function(answer){
-        console.log(answer.itemName, answer.itemDepartment,answer.itemPrice,answer.itemQuantity);
-        var sql = 'INSERT INTO products (product_name,department_name,price,stock_quantity) VALUES (answer.itemName, answer.itemDepartment,answer.itemPrice,answer.itemQuantity)';
-        connection.query(sql, function (error, results) {
-          if (error) throw error;
-          console.log("Product has been added!");
+        connection.query(
+          "INSERT INTO products SET ?",
+          {
+            product_name:  answer.itemName,
+            department_name: answer.itemDepartment,
+            price: answer.itemPrice,
+            stock_quantity: answer.itemQuantity
+          },
+          function (error, results) {4
+              if (error) throw error;
+              console.log("\nProduct has been added to inventory!");
+              start();
         })
     })
   }
@@ -69,21 +77,23 @@ function addInventory(){
   //query the products table to show item ids to select from
   connection.query("SELECT * FROM products", function(err, result){
     if (err) throw err;
-    var choiceArray = [];
-    for (var i = 0; i < result.length; i++) {
-      choiceArray.push(result[i].item_id);
-      console.log(choiceArray[i])
-    }
+    // var choiceArray = [];
+    // for (var i = 0; i < result.length; i++) {
+    //   choiceArray.push(result[i].item_id);
+    //   console.log(choiceArray[i])
+    // }
     inquirer
       .prompt([
         {
           type: "rawlist",
           name: "choice",
           message: "Select the item you want to Re-Stock",
-          choices: function(choiceArray){
-            for (var i=0; i<choiceArray.length; i++){
-              return choiceArray[i];
+          choices: function(){
+            var choiceArray = [];
+            for (var i = 0; i < result.length; i++) {
+              choiceArray.push(result[i].item_name);
             }
+            return choiceArray;
           }
         }
       ])
@@ -100,7 +110,7 @@ function viewLowInventory(){
      start();
    }else{
      console.log(result);
-    console.log("\nItems that stock quantity is less or equal five");
+    console.log("\nItems with a stock quantity of less or equal five");
     display(result);
    }
   });
