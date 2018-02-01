@@ -72,33 +72,55 @@ function addNewProduct(){
     })
   }
 
+function updateInventory(item_id_selected,stockQuantity){
+  sql = "UPDATE products SET stock_quantity = stockQuantity WHERE item_id = item_id_selected";
+  connection.query(sql, function(err, result){
+    if (err) throw err;
+    console.log("\n" + item_id_selected + "     Has been updated, New Stock Quantity:  " + stockQuantity + "\n")
+  })
+}
+
 
 function addInventory(){
   //query the products table to show item ids to select from
   connection.query("SELECT * FROM products", function(err, result){
     if (err) throw err;
-    // var choiceArray = [];
-    // for (var i = 0; i < result.length; i++) {
-    //   choiceArray.push(result[i].item_id);
-    //   console.log(choiceArray[i])
-    // }
+    function choicesArr(products){
+      var choiceArray = [];
+      for (var i = 0; i < products.length; i++) {
+        // console.log("inside choice Array for loop ", typeof (products[i].item_id));
+        choiceArray.push(`${products[i].item_id} Item ${products[i].product_name}`);
+      }
+      return choiceArray;
+    }
     inquirer
       .prompt([
         {
           type: "rawlist",
           name: "choice",
           message: "Select the item you want to Re-Stock",
-          choices: function(){
-            var choiceArray = [];
-            for (var i = 0; i < result.length; i++) {
-              choiceArray.push(result[i].item_name);
+          choices: choicesArr(result)
+        },
+        {
+          type: "input",
+          name: "reStockAmount",
+          message: "How many more items are you adding to the existing inventory?",
+          validate: function(value) {
+            if (isNaN(value) === false) {
+              return true;
             }
-            return choiceArray;
-          }
+            return false;
+          } 
         }
       ])
       .then(function(answer){
-        console.log(answer.choice)
+        var item_id_selected = answer.choice.split(" ");
+        for (var i=0; i < result.length; i++){
+          if (result[i].item_id == item_id_selected[0]){
+            var quantity = parseInt(answer.reStockAmount) + result[i].stock_quantity;
+          }
+        }
+        updateInventory(parseInt(item_id_selected[0]),quantity);
     })
   })
 }
@@ -138,7 +160,6 @@ function start(){
       ]
     }
   ]).then(function(answer){
-      console.log(answer.menuOptions);
       switch (answer.menuOptions){
         case "View Products for Sale":
           viewProductsSale();

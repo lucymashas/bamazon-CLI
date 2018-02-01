@@ -65,6 +65,12 @@ function selectItem() {
           type: "input",
           name: "quantity",
           message: "How Many Items Would You Like To Purchase?",
+          validate: function(value) {
+            if (isNaN(value) === false) {
+              return true;
+            }
+            return false;
+          }
         },
       ])
       .then(function(answer) {
