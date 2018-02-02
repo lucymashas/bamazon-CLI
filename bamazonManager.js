@@ -77,7 +77,8 @@ function updateInventory(item_id_selected,stockQuantity){
   connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?",
   [stockQuantity, item_id_selected],function(err, result){
     if (err) throw err;
-    console.log("\n" + item_id_selected + "     Has been updated, New Stock Quantity:  " + stockQuantity + "\n")
+    console.log("\n" + item_id_selected + "     Has been updated, New Stock Quantity:  " + stockQuantity + "\n");
+    start();
   })
 }
 
@@ -127,13 +128,13 @@ function addInventory(){
 }
 
 function viewLowInventory(){
-  connection.query("SELECT * FROM products HAVING stock_quantity <= 5",function(err, result) {
+  connection.query("SELECT * FROM products HAVING stock_quantity < 5",function(err, result) {
    if (!result.length){
      console.log("\nInventory Count has not drop to lower then 5\n");
      start();
    }else{
      console.log(result);
-    console.log("\nItems with a stock quantity of less or equal five");
+    console.log("\nItems with a stock quantity of less then five");
     display(result);
    }
   });
@@ -157,7 +158,8 @@ function start(){
         'View Products for Sale',
         'View Low Inventory',
         'Add to Inventory',
-        'Add New Product'
+        'Add New Product',
+        'Exit Application'
       ]
     }
   ]).then(function(answer){

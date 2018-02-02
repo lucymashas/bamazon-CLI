@@ -28,10 +28,16 @@ connection.query(
   "SELECT departments.department_id,departments.department_name,departments.over_head_cost,products.product_sales FROM departments INNER JOIN products on products.item_id = departments.department_id",
   function(err, result) {
     if (err) throw err;
-    console.log('\n' + "\tItem ID" + "\tProduct Name");
+    console.log('\n' + "\tItem ID" + "\tDepartment Name");
     for (var i=0; i<result.length;i++){
-      console.log('\t' + result[i].department_id + '\t' + result[i].department_name + '\t' + "Over Head Cost:  " + result[i].over_head_cost + '\t' + "Product Sales:  " + result[i].product_sales);
-      console.log('\t\t' + "------------------------------------------------------------------------")
+      if (result[i].product_sales != null ){
+        var totalProfit = (parseInt(result[i].over_head_cost) - parseInt(result[i].product_sales));
+        console.log('\t\t' + "------------------------------------------------------------------------")
+      }else{
+        totalProfit = 0;
+      }
+      console.log('\t' + result[i].department_id + '\t' + result[i].department_name + '\t\t' + "Over Head Cost:  " + result[i].over_head_cost + '\t' + "Product Sales:  " + result[i].product_sales + totalProfit);
+      
     }
     start();
   })
@@ -77,7 +83,7 @@ function start(){
       choices: [
         'View Products Sales by Department',
         'Create New Department',
-        'Exit'
+        'Exit Application'
       ]
     }
   ]).then(function(answer){
