@@ -73,8 +73,9 @@ function addNewProduct(){
   }
 
 function updateInventory(item_id_selected,stockQuantity){
-  sql = "UPDATE products SET stock_quantity = stockQuantity WHERE item_id = item_id_selected";
-  connection.query(sql, function(err, result){
+  // sql = "UPDATE products SET stock_quantity = stockQuantity WHERE item_id = item_id_selected";
+  connection.query("UPDATE products SET stock_quantity = ? WHERE item_id = ?",
+  [stockQuantity, item_id_selected],function(err, result){
     if (err) throw err;
     console.log("\n" + item_id_selected + "     Has been updated, New Stock Quantity:  " + stockQuantity + "\n")
   })
@@ -170,8 +171,11 @@ function start(){
         case "Add to Inventory":
           addInventory();
           break;
-          case "Add New Product":
+        case "Add New Product":
           addNewProduct();
+          break;
+        case "Exit Application":
+          connection.end();
           break;
       }
     });

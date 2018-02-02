@@ -30,7 +30,8 @@ connection.query(
     if (err) throw err;
     console.log('\n' + "\tItem ID" + "\tProduct Name");
     for (var i=0; i<result.length;i++){
-      console.log('\t' + result[i].department_id + '\t' + result[i].department_name + '\t' + result[i].over_head_cost + '\t' + result[i].product_sales);
+      console.log('\t' + result[i].department_id + '\t' + result[i].department_name + '\t' + "Over Head Cost:  " + result[i].over_head_cost + '\t' + "Product Sales:  " + result[i].product_sales);
+      console.log('\t\t' + "------------------------------------------------------------------------")
     }
     start();
   })
@@ -76,6 +77,7 @@ function start(){
       choices: [
         'View Products Sales by Department',
         'Create New Department',
+        'Exit'
       ]
     }
   ]).then(function(answer){
@@ -87,7 +89,11 @@ function start(){
         case "Create New Department":
           createNewDept();
           break;
+        case "Exit Application":
+          connection.end();
+          break;
       }
+      
     });
 }
 

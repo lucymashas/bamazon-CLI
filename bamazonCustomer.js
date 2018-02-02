@@ -21,6 +21,27 @@ connection.connect(function(err) {
   queryInventory();
 });
 
+function startOver(){
+  inquirer
+  .prompt([
+    {
+    type:"rawlist",
+    name:"decision",
+    message: "What do you want to do?",
+    choices: [ "Exit Application", new inquirer.Separator(), "Place A New Order" ]
+    }
+  ])
+  .then(function(answer){
+    console.log(answer.decision);
+    if (answer.decision === "Exit Application"){
+      connection.end();
+    }else{
+      queryInventory();
+    }
+  }) 
+}
+
+
 function fullfillmentCenter(newQuantity,selectedId,price,usersQuantity,prodSales){
   prodSales = price * usersQuantity + prodSales;
   connection.query(
@@ -32,7 +53,8 @@ function fullfillmentCenter(newQuantity,selectedId,price,usersQuantity,prodSales
       if (error) throw err;
       console.log("\nYour Order Has Been Placed Successfully!");
       console.log(" _____________________________");
-      console.log("\nTotal Cost:  " + price * usersQuantity + "\n");
+      console.log("\nTotal Cost:  " + price * usersQuantity + "\n\n");
+      startOver();
     }
   );
 }
