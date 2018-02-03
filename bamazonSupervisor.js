@@ -90,7 +90,6 @@ function start(){
       ]
     }
   ]).then(function(answer){
-      console.log(answer.menuOptions);
       switch (answer.menuOptions){
         case "View Products Sales by Department":
           viewDeptProductsSale();

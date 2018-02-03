@@ -133,7 +133,6 @@ function viewLowInventory(){
      console.log("\nInventory Count has not drop to lower then 5\n");
      start();
    }else{
-     console.log(result);
     console.log("\nItems with a stock quantity of less then five");
     display(result);
    }
