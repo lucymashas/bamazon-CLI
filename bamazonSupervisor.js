@@ -1,5 +1,6 @@
 var mysql = require("mysql");
 var inquirer = require("inquirer");
+var columnify = require('columnify')
 
 
 // create the connection information for the sql database
@@ -28,17 +29,19 @@ connection.query(
   "SELECT departments.department_id,departments.department_name,departments.over_head_cost,products.product_sales FROM departments INNER JOIN products on products.item_id = departments.department_id",
   function(err, result) {
     if (err) throw err;
-    console.log('\n' + "\tItem ID" + "\tDepartment Name");
+    var spacer="";
+    console.log('\n' + "\tItem ID" + "\tDepartment Name" +"\t\tOver Head Cost" + "\t\tProduct Sales"+ "\tTotal Profits");
     for (var i=0; i<result.length;i++){
       if (result[i].product_sales != null ){
-        var totalProfit = (parseInt(result[i].over_head_cost) - parseInt(result[i].product_sales));
-        console.log('\t\t' + "------------------------------------------------------------------------")
+        var totalProfit = parseFloat(result[i].over_head_cost - result[i].product_sales);
+        console.log('\t\t' + "------------------------------------------------------------------------------")
       }else{
         totalProfit = 0;
       }
-      console.log('\t' + result[i].department_id + '\t' + result[i].department_name + '\t\t' + "Over Head Cost:  " + result[i].over_head_cost + '\t' + "Product Sales:  " + result[i].product_sales + totalProfit);
+      console.log('\t' + result[i].department_id,'\t' + result[i].department_name,'\t\t' + result[i].over_head_cost, '\t\t' + result[i].product_sales,'\t\t' + totalProfit);
       
     }
+    console.log("\n")
     start();
   })
 }

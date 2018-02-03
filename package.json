@@ -12,6 +12,7 @@
   "author": "Lucy Mashas",
   "license": "ISC",
   "dependencies": {
+    "columnify": "^1.5.4",
     "mysql": "^2.15.0"
   }
 }
