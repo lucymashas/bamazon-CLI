@@ -15,3 +15,5 @@ Manager View: provides a list of options to View Products, View Low Inventory , 
 
 Supervisor View:   The supervisor can view all product sale information.  Including Overhead Cost, Total Profit and Product Sales.  The can also add new departments to the store.
 
+Navigate to the screenshot folder for screen views.
+
