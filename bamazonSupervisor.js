@@ -94,8 +94,8 @@ function start(){
         case "View Products Sales by Department":
           viewDeptProductsSale();
           break;
-        case "Create New Department":
-          createNewDept();
+        case "Create New Departartment":
+          createNewDepartment();
           break;
         case "Exit Application":
           connection.end();
