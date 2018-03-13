@@ -1,19 +1,9 @@
 # bamazon-CLI
-B amazon is a shopping console line application in Node with three different views: 1) Customer View 2)Manager View and 3) Supervisor View.
+B amazon is a shopping command line application develop using Node.js with MYSQL.  I used the npm package inquier to provide the user with the different prompts.  This application has three different views: 1) Customer View 2)Manager View and 3) Supervisor View.
 
-Customer View: uses inquirer to prompt the user and mysql to store, update and retrieve information.
-When the customer places the order, the application checks inventory and either fulfills the request or provides a message back to the user.  The application is menu driven, the user can exit the application when the user is done shopping.
+Customer View:  
+When the customer places an order, the application checks inventory and either fulfills the request or provides a message to the user letting them know if the request cannot be filled due to low inventory.   The application is menu driven and the user can exit the application at anytime in the process.
 
-Manager View: provides a list of options to View Products, View Low Inventory , Add to Existing Inventory, Add New Product or Exit the Application.
-`View Products for Sale`, List All Items
+Manager View: provides a list of options to 1) View Products | 2) View Low Inventory | 3)Add to Existing Inventory | 4) Add New Product | 5) Exit the Application.
 
-`View Low Inventory`, List Low Inventory
-
-`Add to Inventory`, Prompts Manager to re-stock any item currently in inventory
-
-`Add New Product`, Adds a New Product 
-
-Supervisor View:   The supervisor can view all product sale information.  Including Overhead Cost, Total Profit and Product Sales.  The can also add new departments to the store.
-
-Navigate to the screenshot folder for screen views.
-
+Supervisor View:   The supervisor can view all product sales infromation.  Including Overhead Cost, Total Profit and Product Sales.  They also have the ability to add new departments to the store.
