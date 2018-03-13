@@ -7,3 +7,5 @@ When the customer places an order, the application checks inventory and either f
 Manager View: provides a list of options to 1) View Products | 2) View Low Inventory | 3)Add to Existing Inventory | 4) Add New Product | 5) Exit the Application.
 
 Supervisor View:   The supervisor can view all product sales infromation.  Including Overhead Cost, Total Profit and Product Sales.  They also have the ability to add new departments to the store.
+
+Screenshots can be found in the screenshot directory of this repository.
